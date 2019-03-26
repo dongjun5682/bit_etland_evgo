@@ -1,109 +1,92 @@
-var auth = auth || {}
-
-auth.permission =(()=>{
-/*	let _ = $.ctx();
-	let js = $.js();
-	let img = $.img();
-	let compojs = $.js()+'/component/compo.js';
+var auth = auth || {};
+auth.permission = (()=>{
+	//let _ = $.ctx();
+	//let js = $.js();
+	//let compojs = $.js()+'/component/compo.js';
 	let rightCtnt = $('#right_content');
-*/
-	let init =()=>{
+	
+	let init = ()=>{
 		onCreate();
 	};
-	let onCreate =()=>{
+	let onCreate = ()=>{
 		setContentView();
 	};
-	let setContentView=()=>{
+	let setContentView = ()=>{
 		
 	};
-	let login =()=>{
+		let login = ()=>{
 		$.getScript($.js()+'/component/compo.js')
 		.done(()=>{
-			$('#right_content').html(compo.cust_login_form());
-			$('.imgcontainer').children().eq(0).attr('src',$.img()+'/img_avatar2.png');
-			$('#left_content>ul.nav').empty();
-			let arr =[
-				{name:'로그인',val:'login'},
-				{name:'회원가입',val:'join'},
-				{name:'사원접속',val:'access'},
-				{name:'사원등록',val:'register'}
-				];
+			rightCtnt.html(compo.cust_login_form());
+			$('form button[type=submit]').click(()=>{
+				let data = {
+						customerID : $('form input[name=uname]').val(),
+						password : $('form input[name=psw]').val()
+				};
+				$.ajax({
+					url : $.ctx()+'/cust/login/',
+					type : 'post',
+					data : JSON.stringify(data),
+					dataType : 'json',
+					contentType : 'application/json',
+					success : d =>{},
+					error : e=>{}
+				});
+			});
+			$('#left_content > .nav').empty();
+			let arr = [
+				{name :'login',text :'로그인'},
+				{name :'sign',text :'회원가입'},
+				{name :'regist',text :'사원등록'},
+				{name :'access',text :'사원로그인'}];
+		
 			$.each(arr,(i,j)=>{
-				$('<li><a href="#">'+j.name+'</a></li>')
-				.appendTo('#left_content>ul.nav')
-				.children()
-				.attr('name',j.val)
+				$('<li><a>'+j.text+'</a></li>')
+				.appendTo('#left_content > .nav')
+				.attr('name',j.name)
 				.click(function(){
-					
 					let that = $(this).attr('name');
-					alert(that);
-					switch (that) {
+					switch(that){
 					case 'login':
-						$('#right_content').empty();
+						rightCtnt.empty();
 						$(compo.cust_login_form()).appendTo('#right_content');
-						$('.imgcontainer').children().eq(0).attr('src',$.img()+'/img_avatar2.png');
-						$('.nav').children().eq(0).attr('class','active');
-						
-						$('.container> [type=submit]').click(()=>{
-							
-							let data ={
-									customerID: $('form input[name=uname]').val(),
-									password : $('form input[name=psw]').val()
-									}
-								
-							alert('ctx : '+ $.ctx()+' id : '+data.customerID+' pwd : '+ data.password);
-							$.ajax({
-								url : $.ctx()+'/cust/login',
-								type : 'POST',
-								data : JSON.stringify(data),
-								dataType: 'json',
-								contentTpye : 'application/json',
-								success : d=>{
-									alert('접속성공');
-								},
-								error : e=>{
-									alert('login ajax error');
-								}
-							});
-						})
-						
+						$('form button[type=submit]').click(()=>{
+							alert('버튼누름');
+						});
 						break;
-					case 'join':
-						$('#right_content').empty();
+					case 'sign':
+						rightCtnt.empty();
 						$(compo.cust_join_form()).appendTo('#right_content');
 						break;
-					case 'access':
-						$('#right_content').empty();
-						$(compo.emp_access_form()).appendTo('#right_content');
-						$('.imgcontainer').children().eq(0).attr('src',img+'/img_avatar2.png');
+					case 'regist':
+						rightCtnt.empty();
+						$(compo.cust_login_form()).appendTo('#right_content');
 						break;
-					case 'register':
-						$('#right_content').empty();
-						$(compo.emp_register_form()).appendTo('#right_content');
+					case 'access':
+						rightCtnt.empty();
+						$(compo.cust_login_form()).appendTo('#right_content');
 						break;
 					}
-					/*
-					 * $(this) .parent() .attr('class','active') .parent()
-					 * .siblings() .removeClass('active');
-					 */
-				})
+				});
 			})
-			
 		})
 		.fail(()=>{
-			alert('compo를 찾지 못했습니다.');
+			alert('component/compo.js 를 찾지 못했다.');
 		});
 	};
-	let join =()=>{
-		
+	let join = ()=>{
+		$.getScript($.js()+'/component/compo.js')
+		.done(()=>{
+			$('#right_content').html(compo.cust_join_form());
+		})
+		.fail(()=>{
+			alert('component/compo.js 를 찾지 못했다.');
+		});
 	};
-	let mypage =()=>{
-		
-	};
-	
+	let mypage = ()=>{};
 	return {
 		login : login,
 		join : join,
 		mypage : mypage
-	}
+	};
 })();

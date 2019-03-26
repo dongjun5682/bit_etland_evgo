@@ -9,21 +9,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Handles requests for the application home page.
+ */
 @RestController
 @RequestMapping("/cust")
 public class CustController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(CustController.class);
-
+	
 	@Autowired Customer cust;
 	
 	@PostMapping("/login")
-	public @ResponseBody Customer login(@RequestBody Customer param) {
-		logger.info("\n login 진입");
-		System.out.println("custController 진입합니다");
+	public @ResponseBody Customer login(@RequestBody  Customer param) {
+		logger.info("cust login 진입");
 		System.out.println(param.toString());
 		return null;
 	}
-	
-	
 }
