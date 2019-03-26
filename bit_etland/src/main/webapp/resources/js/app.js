@@ -12,18 +12,7 @@ app=(()=>{
 				$.getScript($.js()+'/employee/emp.js'),
 				$.getScript($.js()+'/customer/cust.js')
 		).done(()=>{
-			compo.navi();
-			cust.permission.login();
-			$('#li_2').click(()=>{
-				$('#lists').children().eq(0).removeClass('active');
-				$('#lists').children().eq(1).attr('class','active');
-				$('#right_content').html(compo.cust_join_form());
-			});
-			$('#li_1').click(()=>{
-				$('#lists').children().eq(1).removeClass('active');
-				$('#lists').children().eq(0).attr('class','active');
-				cust.permission.login();
-			});
+			auth.permission.login();
 		}
 		);
 	}

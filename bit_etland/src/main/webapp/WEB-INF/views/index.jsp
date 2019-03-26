@@ -9,8 +9,12 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  
+  <!-- css -->
  <link rel="stylesheet" href="<%=application.getContextPath()%>/resources/css/login.css">
  <link rel="stylesheet" href="<%=application.getContextPath()%>/resources/css/login.css">
+  
+  
   <style>
     /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
     .row.content {height: 1500px}
@@ -45,11 +49,11 @@
     
     <div id="left_content" class="col-sm-3 sidenav">
       <h4>John's Blog</h4>
-      <ul id="lists" class="nav nav-pills nav-stacked">
-        <li class="active"><a id="li_1" href="#section1">Home</a></li>
-        <li><a id="li_2" href="#section2">Friends</a></li>
-        <li><a id="li_3" href="#section3">Family</a></li>
-        <li><a id="li_4" href="#section3">Photos</a></li>
+      <ul class="nav nav-pills nav-stacked">
+        <li class="active"><a href="#section1">Home</a></li>
+        <li><a href="#section2">Friends</a></li>
+        <li><a href="#section3">Family</a></li>
+        <li><a href="#section3">Photos</a></li>
       </ul><br>
       <div class="input-group">
         <input type="text" class="form-control" placeholder="Search Blog..">
@@ -132,6 +136,8 @@
   <p>Footer Text</p>
 </footer>
  <script src="<%=application.getContextPath()%>/resources/js/app.js"></script>
+  <script src="<%=application.getContextPath()%>/resources/js/customer/cust.js"></script>
+   <script src="<%=application.getContextPath()%>/resources/js/common/auth.js"></script>
 <script>
 app.init('<%=application.getContextPath()%>');
 </script>

@@ -1,14 +1,8 @@
 var compo = compo || {};
 compo = {
-	navi : ()=>{
-		$('#li_1').text('로그인');
-		$('#li_2').text('회원가입');
-		$('#li_3').text('사원등록');
-		$('#li_4').text('사원접속');
-	},
 	cust_login_form : ()=>{
 		return '<h2>Login Form</h2>'
-		+'<form action="/action_page.php">'
+		+'<form>'
 		+' <div class="imgcontainer">'
 		+'    <img src="/img_avatar2.png" alt="Avatar" class="avatar">'
 		+'  </div>'
