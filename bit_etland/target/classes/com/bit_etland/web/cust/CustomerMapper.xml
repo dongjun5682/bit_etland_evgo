@@ -5,18 +5,19 @@
 <mapper namespace="com.bit_etland.web.cust.CustomerMapper">
   <select id="selectCustomer" resultType="com.bit_etland.web.cust.Customer">
     SELECT 
-    	CUSTOMER_ID customerId,
-		CUSTOMER_NAME customerName,
-		PASSWORD password,
-		SSN ssn,
-		PHOTO photo,
-		PHONE phone,
-		CITY city,
-		ADDRESS address,
-		POSTALCODE postalCode
-    FROM CUSTOMERS 
-    WHERE CUSTOMER_ID LIKE #{customerId}
-    AND PASSWORD LIKE #{password}
+	  	CUSTOMER_ID customerID, 
+        CUSTOMER_NAME customerName, 
+        PASSWORD, 
+        SSN ,
+        PHONE,
+        CITY,
+        ADDRESS,
+        POSTALCODE
+	  FROM CUSTOMERS 
+	  WHERE CUSTOMER_ID LIKE #{customerID} 
+	  	<if test="password != null">
+	  		AND PASSWORD LIKE #{password}
+	  	</if>
   </select>
    <insert 
 	  id="insertCustomer"
