@@ -1,92 +1,94 @@
 var auth = auth || {};
-auth.permission = (()=>{
-	//let _ = $.ctx();
-	//let js = $.js();
-	//let compojs = $.js()+'/component/compo.js';
-	let rightCtnt = $('#right_content');
-	
-	let init = ()=>{
-		onCreate();
-	};
-	let onCreate = ()=>{
-		setContentView();
-	};
-	let setContentView = ()=>{
-		
-	};
-		let login = ()=>{
-		$.getScript($.js()+'/component/compo.js')
-		.done(()=>{
-			rightCtnt.html(compo.cust_login_form());
-			$('form button[type=submit]').click(()=>{
-				let data = {
-						customerID : $('form input[name=uname]').val(),
-						password : $('form input[name=psw]').val()
-				};
-				$.ajax({
-					url : $.ctx()+'/cust/login/',
-					type : 'post',
-					data : JSON.stringify(data),
-					dataType : 'json',
-					contentType : 'application/json',
-					success : d =>{},
-					error : e=>{}
-				});
-			});
-			$('#left_content > .nav').empty();
-			let arr = [
-				{name :'login',text :'로그인'},
-				{name :'sign',text :'회원가입'},
-				{name :'regist',text :'사원등록'},
-				{name :'access',text :'사원로그인'}];
-		
-			$.each(arr,(i,j)=>{
-				$('<li><a>'+j.text+'</a></li>')
-				.appendTo('#left_content > .nav')
-				.attr('name',j.name)
-				.click(function(){
-					let that = $(this).attr('name');
-					switch(that){
-					case 'login':
-						rightCtnt.empty();
-						$(compo.cust_login_form()).appendTo('#right_content');
-						$('form button[type=submit]').click(()=>{
-							alert('버튼누름');
-						});
-						break;
-					case 'sign':
-						rightCtnt.empty();
-						$(compo.cust_join_form()).appendTo('#right_content');
-						break;
-					case 'regist':
-						rightCtnt.empty();
-						$(compo.cust_login_form()).appendTo('#right_content');
-						break;
-					case 'access':
-						rightCtnt.empty();
-						$(compo.cust_login_form()).appendTo('#right_content');
-						break;
-					}
-				});
-			})
-		})
-		.fail(()=>{
-			alert('component/compo.js 를 찾지 못했다.');
-		});
-	};
-	let join = ()=>{
-		$.getScript($.js()+'/component/compo.js')
-		.done(()=>{
-			$('#right_content').html(compo.cust_join_form());
-		})
-		.fail(()=>{
-			alert('component/compo.js 를 찾지 못했다.');
-		});
-	};
-	let mypage = ()=>{};
-	return {
-		login : login,
-		join : join,
-		mypage : mypage
-	};
+auth = (()=>{
+     let _,js,compojs,r_cnt,l_cnt,img;
+     
+     let init =()=>{
+          _ = $.ctx();
+          js = $.js();
+          compojs = js+'/component/compo.js';
+          r_cnt = '#right_content';
+          l_cnt = '#left_content';
+          img = $.img();
+          onCreate();
+     };
+     let onCreate =()=>{
+          setContentView();
+     };
+     let setContentView =()=>{
+          $.getScript(compojs)
+          .done(()=>{
+               $(r_cnt).empty();
+               $(compo.cust_login_form())
+                   .appendTo(r_cnt);
+               $('.imgcontainer').children().eq(0).attr('src',img+'/img_avatar2.png');
+               login(); 
+              $(l_cnt+' ul.nav').empty();
+              let arr=[
+            	  {txt : '로그인', name : 'login'}
+            	  ,{txt : '회원가입', name : 'join'}
+            	  ,{txt : '사원접속', name : 'access'}
+            	  ,{txt : '사원등록', name : 'register'}];
+              
+              $.each(arr,(i,j)=>{
+                    $('<li><a  href="#">'+j.txt+'</a></li>')
+                    .attr('name', j.name)
+                    .appendTo(l_cnt+' ul.nav')
+                    .click(function(){
+                         let that = $(this).attr('name');
+                         switch(that){
+                         case 'login':
+                              $(r_cnt).empty();
+                              $(compo.cust_login_form())
+                              .appendTo(r_cnt);
+                              $('.imgcontainer').children().eq(0).attr('src',img+'/img_avatar2.png');
+                              login(); 
+                              break;
+                         case 'join':
+                              $(r_cnt).empty();
+                              $(compo.cust_join_form())
+                              .appendTo(r_cnt);
+                              break;
+                         case 'access':
+                              $(r_cnt).empty();
+                              $(compo.emp_access_form())
+                              .appendTo(r_cnt);
+                              $('.imgcontainer').children().eq(0).attr('src',img+'/img_avatar2.png');
+                              break;
+                         case 'register':
+                              $(r_cnt).empty();
+                               $(compo.emp_register_form())
+                              .appendTo(r_cnt);
+                              break;
+                         }
+                    });
+              });
+          })
+          .fail(()=>{
+              alert('component/compo.js 를 찾지  못했습니다.');
+          });
+     };
+     let login =()=>{
+          $('form button[type=submit]').click(e=>{
+              let data = {
+                        customerId:$('form  input[name=uname]').val(),
+                        password:$('form  input[name=psw]').val()};
+               $.ajax({
+                    url : _+'/cust/login',
+                    type : 'POST',
+                    dataType : 'json',
+                    data : JSON.stringify(data),
+                    contentType : 'application/json',
+                    success : d =>{
+                         alert('성공 id-> '+d.customerId);
+                    },
+                    error : e=>{
+                         alert('실패');
+                    }
+               });
+           });
+     };
+     let join =()=>{};
+     let register =()=>{};
+     let access =()=>{};
+     return {init:init};
 })();
