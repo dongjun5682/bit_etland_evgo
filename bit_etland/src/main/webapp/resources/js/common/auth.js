@@ -74,7 +74,7 @@ auth = (()=>{
           });
      };
      let login =()=>{
-        
+    
               let data = {
                         customerID:$('form  input[name=uname]').val(),
                         password:$('form  input[name=psw]').val()};
