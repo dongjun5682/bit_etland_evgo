@@ -23,7 +23,7 @@ import com.bit_etland.web.emp.EmployeeMapper;
  * Handles requests for the application home page.
  */
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/cust")
 public class CustController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(CustController.class);
@@ -35,10 +35,9 @@ public class CustController {
 	@Autowired Map<String,Object> map;
 	@Autowired Users<?> user;
 	
-	@PostMapping("/login/{userid}")
+	@PostMapping("/login")
 	public Customer login(
-			@RequestBody Customer param,
-			@PathVariable String userid) {
+			@RequestBody Customer param) {
 		logger.info("\n ===============login=================");
 		 IFunction i = (Object o) -> custMap.selectCustomer((Customer)param);
 		return (Customer)i.apply(param);
@@ -55,7 +54,7 @@ public class CustController {
 		
 	}
 	
-	@PostMapping("/cust")
+	@PostMapping("/join")
 	public Map<String,Object> join(
 			@RequestBody Customer param) {
 		logger.info("\n cust register 진입");
@@ -67,21 +66,18 @@ public class CustController {
 		return map;
 	}
 
-	@PostMapping("/cust/{userid}")
+	@PostMapping("/update")
 	public Object update(
-			@PathVariable String userid,
 			@RequestBody Customer param) {
 		logger.info("\n cust update 진입");
 		ps.accept(param.toString());
 		IConsumer c = (Object o) -> custMap.updateCustomer(param);
 		c.accept(param);
-		return login(param,userid);
+		return login(param);
 	}
 
-	@PostMapping("/cust/{userid}")
+	@PostMapping("/delete")
 	public Map<String,Object> delete(
-			@PathVariable String user,
-			@PathVariable String userid,
 			@RequestBody Customer param) {
 		logger.info("\n cust delete 진입");
 		ps.accept(param.toString());
@@ -91,7 +87,4 @@ public class CustController {
 		map.put("s","success");
 		return map;
 	}
-	
-	
-	
 }

@@ -21,7 +21,7 @@ import com.bit_etland.web.cmm.Users;
 
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/emp")
 public class EmployeeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(EmployeeController.class);
@@ -32,7 +32,7 @@ public class EmployeeController {
 	@Autowired Map<String,Object> map;
 	@Autowired Users<?> user;
 	
-	@PostMapping("/emp/{userid}")
+	@PostMapping("/access/{userid}")
 	public Employee access(
 			@RequestBody Employee param,
 			@PathVariable String userid) {
@@ -52,10 +52,10 @@ public class EmployeeController {
 		
 	}
 	
-	@PostMapping("/emp")
-	public Map<String,Object> join(
+	@PostMapping("/register")
+	public Map<String,Object> register(
 			@RequestBody Employee param) {
-		logger.info("\n cust register 진입");
+		logger.info("\n emp register 진입");
 		ps.accept(param.toString());
 		IConsumer c = (Object o) -> empMap.insertEmployee(param);
 		c.accept(param);
@@ -64,7 +64,7 @@ public class EmployeeController {
 		return map;
 	}
 
-	@PostMapping("/emp/{userid}")
+	@PostMapping("/update/{userid}")
 	public Object update(
 			@PathVariable String userid,
 			@RequestBody Employee param) {

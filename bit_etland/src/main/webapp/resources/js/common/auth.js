@@ -20,7 +20,6 @@ auth = (()=>{
                $(r_cnt).empty(); 
                $(compo.main_form())
                .appendTo(r_cnt);
-          
               $(l_cnt+' ul.nav').empty();
               let arr=[
             	  {txt : '메인',name : 'main'}
@@ -94,7 +93,7 @@ auth = (()=>{
                              }); 
                               break;
                          case 'register':
-                        	 let arr = [
+                        	 let em_arr = [
                         		 {txt:'사원번호',val:'employeeID'},
                         		 {txt:'매니저',val:'manager'},
                         		 {txt:'이름',val:'name'},
@@ -105,7 +104,7 @@ auth = (()=>{
                               $(r_cnt).empty();
                         	  $(compo.cust_join_form()).appendTo(r_cnt);
                         	  $('.container div[name=rm]').empty();
-                              $.each(arr,(i,j)=>{
+                              $.each(em_arr,(i,j)=>{
                             	  if(j.val !== 'password'){
                             		  $('<label for="'+j.val+'"><b>'+j.txt+'</b></label>'
                                 			  +'<input type="text" placeholder="'+j.txt+'" name="'+j.val+'" required>')
@@ -132,15 +131,14 @@ auth = (()=>{
                         customerID:$('form  input[name=uname]').val(),
                         password:$('form  input[name=psw]').val()};
                $.ajax({
-                    url : _+'/cust/login/'+customerID,
+                    url : _+'/cust/login',
                     type : 'POST',
                     dataType : 'json',
                     data : JSON.stringify(data),
                     contentType : 'application/json',
                     success : d =>{
                     		alert('로그인 성공 : '+d.customerID);
-                    		cust.init(d);
-                    	 	
+                    		cust.init(d);                 
                     },
                     error : e=>{
                          alert('실패');
@@ -159,7 +157,7 @@ auth = (()=>{
                   postalCode:$('.container input[name=postalCode]').val()        
     	 };
     	 $.ajax({
-    		 url : _+'/users/register/',
+    		 url : _+'/cust/join',
     		 type : 'POST',
     		 data : JSON.stringify(data),
     		 dataType : 'json',
@@ -180,36 +178,7 @@ auth = (()=>{
     		 }
     	 });
      };
-     let update =(d)=>{
-    	 let up_data = {
-					customerID:d.customerID,
-					password:$('.w3-twothird input[name=password]').val(),
-					city:$('.w3-twothird input[name=city]').val(),
-					address:$('.w3-twothird input[name=address]').val(),
-					postalCode:$('.w3-twothird input[name=postalCode]').val()                    					
-			}
-			$.ajax({
-				url : _+'/users/update/'+up_data.customerID,
-				type : 'POST',
-				data : JSON.stringify(up_data),
-				dataType : 'json',
-				contentType : 'application/json',
-				success : d=>{
-					alert('updata 성공');
-					$(r_cnt).empty();
-            		$(compo.cust_profil_form(d)).appendTo(r_cnt);  
-            		 $('.w3-container button[type=submit]').click(()=>{
-            				update(d);
-            	 		})
-				},
-				error : e=>{
-					alert('실패했습니다');
-				}
-			})
-     };
-     let remove =()=>{
-    	 
-     }     
+    
      let register =()=>{
     	 let data = {
     			 employeeID:$('.container input[name=employeeID]').val(),
@@ -246,7 +215,7 @@ auth = (()=>{
         		 employeeID:$('form  input[name=employeeID]').val(),
                    name:$('form  input[name=name]').val()};
           $.ajax({
-               url : _+'/users/employee/',
+               url : _+'/emp/access',
                type : 'POST',
                dataType : 'json',
                data : JSON.stringify(data),
