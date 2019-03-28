@@ -13,10 +13,7 @@
   <!-- css -->
  <link rel="stylesheet" href="<%=application.getContextPath()%>/resources/css/login.css">
  <link rel="stylesheet" href="<%=application.getContextPath()%>/resources/css/login.css">
- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  
+
   <style>
     /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
     .row.content {height: 1500px}
@@ -42,7 +39,11 @@
       }
       .row.content {height: auto;} 
     }
-    html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
+      .jumbotron {
+    background-color: #f4511e;
+    color: #fff;
+    margin-top: 200px;
+  }
   </style>
 </head>
 <body>

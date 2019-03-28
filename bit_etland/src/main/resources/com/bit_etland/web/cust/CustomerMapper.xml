@@ -25,9 +25,8 @@
 	  flushCache="true"
 	  statementType="PREPARED"
 	  timeout="20">
-        INSERT INTO CUSTOMERS(CUSTOMER_ID,CUSTOMER_NAME,PASSWORD
-        					,ADDRESS,CITY,POSTALCODE,SSN,PHONE) 
-        values (#{customerId}, #{customerName}, #{password}, #{address}
+        INSERT INTO CUSTOMERS(CUSTOMER_ID,CUSTOMER_NAME,PASSWORD,ADDRESS,CITY,POSTALCODE,SSN,PHONE) 
+        values (#{customerID},#{customerName},#{password},#{address}
         		,#{city},#{postalCode},#{ssn},#{phone})
    </insert>
    
@@ -39,8 +38,8 @@
 	  timeout="20">
 	  UPDATE CUSTOMERS SET 
 	  PASSWORD = #{password},ADDRESS = #{address},CITY = #{city}, 
-	  			POSTALCODE = #{postalCode}, PHONE = #{phone} 
-	  			WHERE CUSTOMER_ID LIKE #{customerId}
+	  			POSTALCODE = #{postalCode}
+	  			WHERE CUSTOMER_ID LIKE #{customerID}
 	</update>
 	<delete
 	  id="deleteCustomer"
@@ -48,6 +47,6 @@
 	  flushCache="true"
 	  statementType="PREPARED"
 	  timeout="20">
-	  DELETE FROM CUSTOMERS WHERE CUSTOMER_ID LIKE #{customerId}
+	  DELETE FROM CUSTOMERS WHERE CUSTOMER_ID LIKE #{customerID}
 	</delete>
 </mapper>
