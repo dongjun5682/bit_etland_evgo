@@ -1,7 +1,7 @@
 var cust = cust || {}
 
 cust = (()=>{
-	let _,js,compojs,r_cnt;
+	let _,js,compojs,r_cnt,l_cnt;
 	let init =(d)=>{
 		_ = $.ctx();
 		 r_cnt = '#right_content';
@@ -14,7 +14,7 @@ cust = (()=>{
 		setContentView(d)
 	}
 	let setContentView =(d)=>{
-		$.getScript(compojs)
+		$.when(	$.getScript(compojs))
 		.done(()=>{
 			$(r_cnt).empty();
 	    	$(compo.cust_profil_form(d)).appendTo(r_cnt);  
@@ -36,8 +36,10 @@ cust = (()=>{
 	                 $(this).addClass('active');
 	                 $(this).siblings().removeClass('active');
 	                 switch(that){
-	                 case 'main':	              
-	                	prod.init();
+	                 case 'main':
+	                	 $.getScript(js+'/product/prod.js').done(()=>{
+	                		 prod.init();
+	                	 })
 	                	break;
 	                 case 'mypage':
 		                $(r_cnt).empty();
@@ -86,8 +88,8 @@ cust = (()=>{
 						postalCode:$('.w3-twothird input[name=postalCode]').val()                    					
 				}
 				$.ajax({
-					url : _+'/cust/update',
-					type : 'POST',
+					url : _+'/customers/'+d.customerID,
+					type : 'PUT',
 					data : JSON.stringify(up_data),
 					dataType : 'json',
 					contentType : 'application/json',
@@ -110,9 +112,12 @@ cust = (()=>{
 	     };
 	     
 	     let remove =()=>{
+	    	 let date= {
+	    		 
+	    	 }
 	    	 $.ajax({
-	    		 url : _+'/cust/delete',
-	    		 type : 'POST',
+	    		 url : _+'/customers/',
+	    		 type : 'DELETE',
 	    		 data : JSON.stringify(),
 	    		 dataType : 'json',
 	    		 contentType : 'application/json',

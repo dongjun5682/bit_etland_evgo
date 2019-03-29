@@ -16,8 +16,8 @@ auth = (()=>{
           setContentView();
      };
      let setContentView =()=>{
-          $.getScript(compojs)
-          .done(()=>{
+    		$.when(	$.getScript($.js()+'/component/compo.js'),
+    				$.getScript($.js()+'/customer/cust.js')).done(()=>{
                $(r_cnt).empty(); 
                $(compo.main_form())
                .appendTo(r_cnt);
@@ -135,7 +135,7 @@ auth = (()=>{
                         customerID:$('form  input[name=uname]').val(),
                         password:$('form  input[name=psw]').val()};
                $.ajax({
-                    url : _+'/cust/login',
+                    url : _+'/customers/'+data.customerID,
                     type : 'POST',
                     dataType : 'json',
                     data : JSON.stringify(data),
@@ -161,7 +161,7 @@ auth = (()=>{
                   postalCode:$('.container input[name=postalCode]').val()        
     	 };
     	 $.ajax({
-    		 url : _+'/cust/join',
+    		 url : _+'/customers',
     		 type : 'POST',
     		 data : JSON.stringify(data),
     		 dataType : 'json',
@@ -193,7 +193,7 @@ auth = (()=>{
     			 notes:$('.container input[name=notes]').val()            
    	 };
    	 $.ajax({
-   		 url : _+'/emp/register/',
+   		 url : _+'/employees',
    		 type : 'POST',
    		 data : JSON.stringify(data),
    		 dataType : 'json',
@@ -219,7 +219,7 @@ auth = (()=>{
         		 employeeID:$('form  input[name=employeeID]').val(),
                    name:$('form  input[name=name]').val()};
           $.ajax({
-               url : _+'/emp/access',
+               url : _+'/employees/'+data.employeeID,
                type : 'POST',
                dataType : 'json',
                data : JSON.stringify(data),
