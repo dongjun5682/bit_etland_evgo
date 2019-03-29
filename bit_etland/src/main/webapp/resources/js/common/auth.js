@@ -6,6 +6,7 @@ auth = (()=>{
           _ = $.ctx();
           js = $.js();
           compojs = js+'/component/compo.js';
+          custjs = js+'/customer/cust.js';
           r_cnt = '#right_content';
           l_cnt = '#left_content';
           img = $.img();
@@ -34,6 +35,8 @@ auth = (()=>{
                     .appendTo(l_cnt+' ul.nav')
                     .click(function(){
                          let that = $(this).attr('name');
+                         $(this).addClass('active');
+                         $(this).siblings().removeClass('active');
                          switch(that){
                          case 'main':
                         	 $(r_cnt).empty();
@@ -119,6 +122,7 @@ auth = (()=>{
                               break;
                          }
                     });
+                    $('[name=main]').addClass('active');
               });
           })
           .fail(()=>{
@@ -137,7 +141,7 @@ auth = (()=>{
                     data : JSON.stringify(data),
                     contentType : 'application/json',
                     success : d =>{
-                    		alert('로그인 성공 : '+d.customerID);
+                    		alert('로그인 성공 : '+d.customerID);                
                     		cust.init(d);                 
                     },
                     error : e=>{
@@ -189,7 +193,7 @@ auth = (()=>{
     			 notes:$('.container input[name=notes]').val()            
    	 };
    	 $.ajax({
-   		 url : _+'/users/register/',
+   		 url : _+'/emp/register/',
    		 type : 'POST',
    		 data : JSON.stringify(data),
    		 dataType : 'json',
