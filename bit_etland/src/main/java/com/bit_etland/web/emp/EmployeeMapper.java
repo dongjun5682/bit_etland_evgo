@@ -17,6 +17,8 @@ public interface EmployeeMapper {
 
 	public Employee selectEmployee(Employee emp);
 
+	public Employee selectEmployeeAll();
+	
 	public int countEmployees(Map<?,?> m);
 
 	public boolean existsEmployee(Employee emp);

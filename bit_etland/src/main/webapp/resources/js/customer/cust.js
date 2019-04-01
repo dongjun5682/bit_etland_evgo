@@ -14,7 +14,8 @@ cust = (()=>{
 		setContentView(d)
 	}
 	let setContentView =(d)=>{
-		$.when(	$.getScript(compojs))
+		$.when(	$.getScript(compojs),
+				$.getScript($.js()+'/employee/emp.js'))
 		.done(()=>{
 			$(r_cnt).empty();
 	    	$(compo.cust_profil_form(d)).appendTo(r_cnt);  
@@ -112,9 +113,7 @@ cust = (()=>{
 	     };
 	     
 	     let remove =()=>{
-	    	 let date= {
-	    		 
-	    	 }
+	    	 alert('삭제페이지');
 	    	 $.ajax({
 	    		 url : _+'/customers/',
 	    		 type : 'DELETE',
@@ -129,6 +128,28 @@ cust = (()=>{
 	    			 
 	    		 }
 	    	 })
-	     }  
-	return {init :init}
+	     };
+	     let list =()=>{
+	    	 $('#right_content').empty();
+	    	 $(compo.cust_list()).appendTo('#right_content');
+	    	 $.getJSON($.ctx()+'/customers/page/1',d=>{
+				 $.each(d,(i,j)=>{
+					 $('<tr>').appendTo('#cust_list');
+					 $('<th>'+i+'</th>').appendTo('#cust_list');
+					   $('<th>'+j.customerID+'</th>').appendTo('#cust_list');
+					   $('<th>'+j.password+'</th>').appendTo('#cust_list');
+					   $('<th>'+j.customerName+'</th>').appendTo('#cust_list');
+					   $('<th>'+j.ssn+'</th>').appendTo('#cust_list');
+					   $('<th>'+j.phone+'</th>').appendTo('#cust_list');
+					   $('<th>'+j.city+'</th>').appendTo('#cust_list');
+					   $('<th>'+j.address+'</th>').appendTo('#cust_list');
+					   $('<th>'+j.postalCode+'</th>').appendTo('#cust_list');
+					   $('<th>'+j.photo+'</th>').appendTo('#cust_list');
+					   $('</tr>').appendTo('#cust_list');
+					    		 });
+	    	 });
+	    	
+	     }
+	return {init :init,
+		list : list}
 })();

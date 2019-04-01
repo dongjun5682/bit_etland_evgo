@@ -48,6 +48,13 @@
       }
       .row.content {height: auto;} 
     }
+    #cust_list th{
+     font-size : 13px;
+     text-align:center;
+    }
+    .table th {
+        text-align:center;
+    }
   </style>
 </head>
 <body>
@@ -56,7 +63,8 @@
   <div id="full_content" class="row content">
     
     <div id="left_content" class="col-sm-3 sidenav">
-      <h4>John's Blog</h4>
+      <h4>Bit-Etland</h4>
+       	<h3>Menu</h3>
       <ul class="nav nav-pills nav-stacked">
         <li class="active"><a href="#section1">Home</a></li>
         <li><a href="#section2">Friends</a></li>
@@ -147,7 +155,7 @@
   <script src="<%=application.getContextPath()%>/resources/js/customer/cust.js"></script>
    <script src="<%=application.getContextPath()%>/resources/js/common/auth.js"></script>
    <script src="<%=application.getContextPath()%>/resources/js/product/prod.js"></script>
-   
+      <script src="<%=application.getContextPath()%>/resources/js/employee/emp.js"></script>
 <script>
 app.init('<%=application.getContextPath()%>');
 </script>

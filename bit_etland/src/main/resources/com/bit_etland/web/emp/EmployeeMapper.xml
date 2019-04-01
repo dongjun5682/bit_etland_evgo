@@ -3,4 +3,62 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bit_etland.web.emp.EmployeeMapper">
+  <select id="selectEmployee" resultType="com.bit_etland.web.emp.Employee">
+    SELECT 
+	  	EMPLOYEE_ID employeeID, 
+        MANAGER manager, 
+        NAME, 
+        BIRTH_DATE,
+        PHOTO,
+        NOTES
+	  FROM EMPLOYEES 
+	  WHERE EMPLOYEE_ID LIKE #{employeeID} 
+	  	<if test="name != null">
+	  		AND name LIKE #{name}
+	  	</if>
+  </select>
+  
+   <select id="selectEmployeeAll" resultType="com.bit_etland.web.emp.Employee">
+    SELECT 
+    	EMPLOYEE_ID employeeID, 
+        MANAGER manager, 
+        NAME, 
+        BIRTH_DATE,
+        PHOTO,
+        NOTES 
+     FROM EMPLOYEES
+  </select>
+ 	
+ 
+ 
+ 
+   <insert 
+	  id="insertEmployee"
+	  parameterType="com.bit_etland.web.emp.Employee"
+	  flushCache="true"
+	  statementType="PREPARED"
+	  timeout="20">
+        INSERT INTO EMPLOYEES(EMPLOYEE_ID,MANAGER,NAME,BIRTHDATE,PHOTO,NOTES) 
+        values (#{employeeID},#{manager},#{name},#{birthDate}
+        		,#{photo},#{notes}})
+   </insert>
+   
+	<update
+	  id="updateEmployee"
+	  parameterType="com.bit_etland.web.emp.Employee"
+	  flushCache="true"
+	  statementType="PREPARED"
+	  timeout="20">
+	  UPDATE EMPLOYEES SET 
+	  manager = #{manager},photo = #{photo},notes = #{notes}
+	  			WHERE EMPLOYEE_ID LIKE #{employeeID}
+	</update>
+	<delete
+	  id="deleteEmployee"
+	  parameterType="com.bit_etland.web.emp.Employee"
+	  flushCache="true"
+	  statementType="PREPARED"
+	  timeout="20">
+	  DELETE FROM EMPLOYEES WHERE EMPLOYEE_ID LIKE #{EMPLOYEEID}
+	</delete>
 </mapper>

@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bit_etland.web.cmm.IConsumer;
 import com.bit_etland.web.cmm.IFunction;
+import com.bit_etland.web.cmm.ISuppiler;
 import com.bit_etland.web.cmm.PrintService;
+import com.bit_etland.web.cmm.Proxy;
 import com.bit_etland.web.cmm.Users;
 import com.bit_etland.web.emp.EmployeeMapper;
 
@@ -24,9 +26,9 @@ import com.bit_etland.web.emp.EmployeeMapper;
  * Handles requests for the application home page.
  */
 @RestController
-public class CustController {
+public class CustomerController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(CustController.class);
+	private static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
 	
 	@Autowired Customer cust;
 	@Autowired PrintService ps;
@@ -34,6 +36,7 @@ public class CustController {
 	@Autowired EmployeeMapper empMap;
 	@Autowired Map<String,Object> map;
 	@Autowired Users<?> user;
+	@Autowired Proxy pxy;
 	
 	@PostMapping("/customers/{userid}")
 	public Customer login(
@@ -46,13 +49,17 @@ public class CustController {
 	
 	@SuppressWarnings("unchecked")
 	@GetMapping("/customers/page/{page}")
-	public List<Users<?>> list(
-			@PathVariable String user,
-			@RequestBody Map<?,?> param){
-		logger.info("\n ===============list=================");
-		IFunction i = (Object o) -> custMap.selectCustomers(param);
-		return (List<Users<?>>)i.apply(param);
-		
+	public List<Customer> list(
+			@PathVariable String page){
+		logger.info("\n ===============Cust List=================");
+		map.clear();
+		map.put("page_num","1");
+		map.put("page_size","5");
+		map.put("block_Size","5");
+		map.put("total_count","10");
+		pxy.carryOut(map);
+		IFunction i = (Object o)->custMap.selectCustomerList(pxy);
+		return (List<Customer>)i.apply(pxy);
 	}
 	
 	@PostMapping("/customers")

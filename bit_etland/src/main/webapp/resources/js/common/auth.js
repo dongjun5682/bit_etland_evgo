@@ -1,7 +1,6 @@
 var auth = auth || {};
 auth = (()=>{
      let _,js,compojs,r_cnt,l_cnt,img;
-     
      let init =()=>{
           _ = $.ctx();
           js = $.js();
@@ -206,7 +205,7 @@ auth = (()=>{
                 $('.imgcontainer').children().eq(0).attr('src',img+'/img_avatar2.png');
                 $('form button[type=submit]').click(e=>{   
            	     e.preventDefault();
-                     login(); 
+           	     	access();
               }); 
    		 },
    		 error : e =>{
@@ -215,7 +214,31 @@ auth = (()=>{
    	 });
     };
      let access =()=>{
-         let data = {
+    	 
+    	 let ok = confirm('사원 입니까?');
+    	 if(ok){
+    		 let emp_no = prompt('사원번호 입력하세요');
+    		 let emp_name = prompt('사원 이름 입력하세요.');
+    		 $.getJSON(_+'/employees',d=>{
+    			 if(emp_no === d.employeeID){
+        			 if(emp_name === d.name){
+        				 alert(d.name+' 사원 인증');
+        				 //고객명단
+          				 $.getScript($.js()+'/employee/emp.js',()=>{
+        					emp.init();
+        				 })
+        			 }else{
+        				 alert('사원 이름이 틀립니다');
+        			 }
+        		 }else{
+        			 alert('사원 번호가 틀립니다.');
+        		 }
+    		 })
+    	 }else{
+			 alert('사원 전용 페이지 입니다.');
+
+    	 }
+     /*    let data = {
         		 employeeID:$('form  input[name=employeeID]').val(),
                    name:$('form  input[name=name]').val()};
           $.ajax({
@@ -225,19 +248,13 @@ auth = (()=>{
                data : JSON.stringify(data),
                contentType : 'application/json',
                success : d =>{
-               		alert('로그인 성공 : '+d.customerID);
-               		$(r_cnt).empty();
-               		$(compo.cust_profil_form(d)).appendTo(r_cnt);  
-               		$('.w3-container button[type=submit]').click(()=>{
-               				update(d);
-               	 		})               
-               	 	$('.w3-container button[type=submit]').after('<button type="submit">Customer delete</button>')
-               	 	
+               		alert('로그인 성공 : '+d.employeeID);
+               		emp.init();
                },
                error : e=>{
                     alert('실패');
                }
-          });
+          });*/
     	 
      };
      return {init:init};

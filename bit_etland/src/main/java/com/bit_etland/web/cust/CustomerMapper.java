@@ -1,9 +1,11 @@
 package com.bit_etland.web.cust;
 
 import java.util.List;
-
 import java.util.Map;
+
 import org.springframework.stereotype.Repository;
+
+import com.bit_etland.web.cmm.Proxy;
 
 
 
@@ -11,7 +13,7 @@ import org.springframework.stereotype.Repository;
 public interface CustomerMapper {
 	
 	public void insertCustomer(Customer cus);
-	public List<Customer> selectCustomerList(Map<?,?> m);
+	public List<Customer> selectCustomerList(Proxy pxy);
 	public List<Customer> selectCustomers(Map<?,?> m);
 	public Customer selectCustomer(Customer cus);
 	public int countCustomers(Map<?,?> m);

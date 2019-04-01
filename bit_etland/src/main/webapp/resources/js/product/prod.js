@@ -23,8 +23,7 @@ prod = (()=>{
         	$(l_cnt+' ul.nav').empty();
         	let arr=[
         		{txt : '메인',name : 'main'},
-          	  {txt : '카테고리',name : 'catego'},
-          	  {txt : '상품등록',name : 'prod_post'}
+          	  {txt : '카테고리',name : 'catego'}
         	  ];
             $.each(arr,(i,j)=>{
             	$('<li><a  href="#">'+j.txt+'</a></li>')
@@ -40,10 +39,6 @@ prod = (()=>{
 		                    	$(compo.cust_shopping_form()).appendTo(r_cnt); 
 		                	 break;
 		                 case 'catego':	  
-			                	break;
-		                 case 'prod_post':
-		                	 $(r_cnt).empty();
-		                	 $(compo.prod_post()).appendTo(r_cnt); 
 			                	break;
 		                 }
 		                 
