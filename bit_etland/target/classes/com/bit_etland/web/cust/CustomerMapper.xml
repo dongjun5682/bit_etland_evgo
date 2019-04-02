@@ -3,6 +3,18 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bit_etland.web.cust.CustomerMapper">
+<resultMap id="result" type="hashmap">
+  <id property="customerID" column="CUSTOMER_ID" />
+  <result property="customerName" column="CUSTOMER_NAME"/>
+  <result property="password" column="PASSWORD"/>
+  <result property="ssn" column="SSN"/>
+  <result property="photo" column="PHOTO"/>
+  <result property="phone" column="PHONE"/>
+  <result property="city" column="CITY"/>
+  <result property="address" column="ADDRESS"/>
+  <result property="rownum" column="ROWNUM"/>
+  <result property="postalCode" column="POSTALCODE"/>
+</resultMap>
   <select id="selectCustomer" resultType="com.bit_etland.web.cust.Customer">
     SELECT 
 	  	CUSTOMER_ID customerID, 
@@ -19,22 +31,7 @@
 	  		AND PASSWORD LIKE #{password}
 	  	</if>
   </select>
-  
-  
-   <select id="selectCustomerList" resultType="com.bit_etland.web.cust.Customer"
-    parameterType="com.bit_etland.web.cmm.Proxy">
-    SELECT 
-	  	CUSTOMER_ID customerID, 
-        CUSTOMER_NAME customerName, 
-        PASSWORD, 
-        SSN ,
-        PHONE,
-        CITY,
-        ADDRESS,
-        POSTALCODE,
-        PHOTO
-	  FROM CUSTOMERS 
-  </select>
+
    <insert 
 	  id="insertCustomer"
 	  parameterType="com.bit_etland.web.cust.Customer"
@@ -65,4 +62,25 @@
 	  timeout="20">
 	  DELETE FROM CUSTOMERS WHERE CUSTOMER_ID LIKE #{customerID}
 	</delete>
+	
+	<select id="selectCustomerList" resultMap="result"
+    parameterType="com.bit_etland.web.cmm.Proxy">
+		SELECT C3.*
+		FROM (
+				SELECT @rnum:=@rnum+1 AS ROWNUM,C2.CUSTOMER_ID,C2.CUSTOMER_NAME
+						,C2.PASSWORD,C2.SSN,C2.PHONE,C2.CITY
+						,C2.ADDRESS,C2.POSTALCODE,C2.PHOTO
+				FROM(
+						SELECT @ROWNUM:=@ROWNUM+1 as rnum, C.*
+						FROM CUSTOMERS C, (SELECT @ROWNUM:=0) R
+						order by rnum DESC) C2,(select @rnum:=0) R
+				)C3
+		WHERE C3.ROWNUM BETWEEN #{startRow} AND #{endRow};
+    
+ 	<!--  SELECT @ROWNUM:=@ROWNUM+1 AS rownum,
+           C.*
+		FROM CUSTOMERS C, (SELECT @ROWNUM:=0)TMP
+		ORDER BY NO DESC
+		limit #{startRow},#{pageSize}; -->
+  </select>
 </mapper>

@@ -1,6 +1,7 @@
 package com.bit_etland.web.cust;
 
 import java.util.List;
+
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bit_etland.web.cmm.IConsumer;
 import com.bit_etland.web.cmm.IFunction;
-import com.bit_etland.web.cmm.ISuppiler;
 import com.bit_etland.web.cmm.PrintService;
 import com.bit_etland.web.cmm.Proxy;
 import com.bit_etland.web.cmm.Users;
@@ -47,19 +47,25 @@ public class CustomerController {
 		return (Customer)i.apply(param);
 	}
 	
-	@SuppressWarnings("unchecked")
 	@GetMapping("/customers/page/{page}")
-	public List<Customer> list(
+	public Map<?,?> list(
 			@PathVariable String page){
 		logger.info("\n ===============Cust List=================");
 		map.clear();
-		map.put("page_num","1");
+		map.put("page_num",page);
 		map.put("page_size","5");
 		map.put("block_Size","5");
-		map.put("total_count","10");
+		map.put("total_count","36");
 		pxy.carryOut(map);
 		IFunction i = (Object o)->custMap.selectCustomerList(pxy);
-		return (List<Customer>)i.apply(pxy);
+		List<?> ls = (List<?>)i.apply(pxy);
+		map.clear();
+		map.put("ls",ls);
+		map.put("pxy",pxy);
+		ps.accept(ls.toString());
+		ps.accept(pxy.toString());
+		
+		return map;
 	}
 	
 	@PostMapping("/customers")

@@ -13,7 +13,7 @@ import com.bit_etland.web.cmm.Proxy;
 public interface CustomerMapper {
 	
 	public void insertCustomer(Customer cus);
-	public List<Customer> selectCustomerList(Proxy pxy);
+	public List<?> selectCustomerList(Proxy pxy);
 	public List<Customer> selectCustomers(Map<?,?> m);
 	public Customer selectCustomer(Customer cus);
 	public int countCustomers(Map<?,?> m);

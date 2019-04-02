@@ -7,11 +7,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  
+
+  <link rel="canonical" href="https://getbootstrap.com/docs/4.1/examples/checkout/">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
@@ -21,8 +21,8 @@
   <!-- css -->
  <link rel="stylesheet" href="<%=application.getContextPath()%>/resources/css/login.css">
  <link rel="stylesheet" href="<%=application.getContextPath()%>/resources/css/login.css">
- <link rel="stylesheet" href="<%=application.getContextPath()%>/resources/css/prod_main.css">
-
+ <link rel="stylesheet" href="<%=application.getContextPath()%>/resources/css/prod_main.css"> 
+ 
   <style>
     /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
     .row.content {height: 1500px}
