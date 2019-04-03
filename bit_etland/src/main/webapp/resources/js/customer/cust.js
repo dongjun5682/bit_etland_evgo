@@ -1,7 +1,7 @@
 var cust = cust || {}
 
 cust = (() => {
-    let _, js, compojs, r_cnt, l_cnt;
+    let _, js, compojs, r_cnt, l_cnt, prdjs;
     let init = (d) => {
         reset();
         onCreate(d);
@@ -147,47 +147,71 @@ cust = (() => {
     let list = (x) => {
         reset();
         $(r_cnt).empty();
-        $(compo.cust_list()).appendTo(r_cnt);
-        $.getJSON(_ + '/customers/page/'+x, d => {
-            html = '<div id="pagination"> <ul class="pagination">'
-            if(d.pxy.existPrev){
-            	html += '<li><a href="#">&laquo;</a></li>';
+        $.getJSON(_ + '/customers/page/' + x, d => {
+            $('<div class="grid-item" id="content_1">' +
+                    '<h1><font style="font-size: 20px;margin: 0 auto;">상품 목록</font>' +
+                    '</h1>' +
+                    '</div>' +
+                    '<div class="grid-item" id="content_2"></div>')
+                .appendTo(r_cnt);
+            let table = '<table class="table table-bordered"><tr>' +
+                '<th>RowNum</th>' +
+                '<th>CustomerID</th>' +
+                '<th>Name</th>' +
+                '<th>Gender</th>' +
+                '<th>Phone</th>' +
+                '<th>City</th>' +
+                '<th>Address</th>' +
+                '<th>PostalCode</th>' +
+                '<th>Photo</th>' +
+                '</tr>'
+            $.each(d.ls, (i, j) => {
+                table += '<tr><td>' + j.rownum + '</td>' +
+                    '<td>' + j.customerID + '</td>' +
+                    '<td>' + j.customerName + '</td>' +
+                    '<td>남</td>' +
+                    '<td>' + j.phone + '</td>' +
+                    '<td>' + j.city + '</td>' +
+                    '<td>' + j.address + '</td>' +
+                    '<td>' + j.postalCode + '</td>' +
+                    '<td>' + j.photo + '</td>' +
+                    '</tr>'
+            });
+            table += '</table>'
+            //$(r_cnt).empty();
+            $(table)
+                .attr('id', 'cust_tab')
+                .appendTo('#content_2');
+            let html = '<nav style="margin-left: 510px;"> <ul class="pagination">'
+            if (d.pxy.existPrev) {
+                html += '<li class="prevBlock"><a href="#">&laquo;</a></li>';
             }
-            let i =0;
-            for(i=d.pxy.startpage;i<=d.pxy.endpage;i++){
-            	if(d.pxy.pageNum){
-            		
-            		html += '<li><a href="#" class="page active">'+i+'</a></li>';
-            	}else{
-            	
-            		html+= '<li><a href="#" class="page">'+i+'</a></li>';
-            	}
+            let i = 0;
+            for (i = d.pxy.startPage; i <= d.pxy.endPage; i++) {
+                if (x == i) {
+                    html += '<li class="active"><a href="#" class="page">' + i + '</a></li>';
+                } else {
+
+                    html += '<li><a href="#" class="page">' + i + '</a></li>';
+                }
             }
-            if(d.pxy.existNext){
-            	html += '<li><a href="#">&raquo;</a></li>';
+            if (d.pxy.existNext) {
+                html += '<li class="nextBlock"><a href="#">&raquo;</a></li>';
             }
             $('.table').after(html);
-            $.each(d.ls, (i, j) => {
-                $('<tr>').appendTo('#cust_list');
-                $('<th>' + j.rownum + '</th>').appendTo('#cust_list');
-                $('<th>' + j.customerID + '</th>').appendTo('#cust_list');
-                $('<th>' + j.password + '</th>').appendTo('#cust_list');
-                $('<th>' + j.customerName + '</th>').appendTo('#cust_list');
-                $('<th>' + j.ssn + '</th>').appendTo('#cust_list');
-                $('<th>' + j.phone + '</th>').appendTo('#cust_list');
-                $('<th>' + j.city + '</th>').appendTo('#cust_list');
-                $('<th>' + j.address + '</th>').appendTo('#cust_list');
-                $('<th>' + j.postalCode + '</th>').appendTo('#cust_list');
-                $('<th>' + j.photo + '</th>').appendTo('#cust_list');
-                $('</tr>').appendTo('#cust_list');
+            $('.page').each(function() {
+                $(this).click(() => {
+                    list($(this).text());
+                });
             });
-            $('.page').each(function(i){
-            	$(this).click(()=>{	
-            		list(i+1);
-            	});
-            });
+            $('.nextBlock').click(function() {
+                list(d.pxy.nextBlock);
+            })
+            $('.prevBlock').click(function() {
+                list(d.pxy.prevBlock);
+            })
         });
-       
+
     }
     return {
         init: init,

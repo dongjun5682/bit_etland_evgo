@@ -3,6 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bit_etland.web.cust.CustomerMapper">
+
 <resultMap id="result" type="hashmap">
   <id property="customerID" column="CUSTOMER_ID" />
   <result property="customerName" column="CUSTOMER_NAME"/>
@@ -76,11 +77,11 @@
 						order by rnum DESC) C2,(select @rnum:=0) R
 				)C3
 		WHERE C3.ROWNUM BETWEEN #{startRow} AND #{endRow};
-    
- 	<!--  SELECT @ROWNUM:=@ROWNUM+1 AS rownum,
-           C.*
-		FROM CUSTOMERS C, (SELECT @ROWNUM:=0)TMP
-		ORDER BY NO DESC
-		limit #{startRow},#{pageSize}; -->
   </select>
+   <select id="countCustomers" resultType="Integer">
+    SELECT count(*) FROM CUSTOMERS
+  </select>
+  
+  
+  
 </mapper>

@@ -3,6 +3,7 @@ var emp = emp || {};
 emp = (() => {
     let _, js, compojs, r_cnt, l_cnt;
     let init = () => {
+
         reset();
         onCreate();
     };
@@ -45,11 +46,15 @@ emp = (() => {
                                 break;
                             case 'prod_list':
                                 $(l_cnt + ' h4').text(j.txt);
+                                prod.list(1);
                                 break;
                             case 'prod_post':
                                 $(l_cnt + ' h4').text(j.txt);
                                 $(r_cnt).empty();
                                 $(compo.prod_post()).appendTo(r_cnt);
+                                $('.col-md-8 button[type=submit]').click(() => {
+                                    prod.post();
+                                })
                                 break;
                             case 'prod_up':
                                 $(l_cnt + ' h4').text(j.txt);
@@ -68,7 +73,7 @@ emp = (() => {
 
     }
     let empNav = () => {
-       return arr = [{
+        return arr = [{
             txt: '직원 목록',
             name: 'emp_list'
         }, {

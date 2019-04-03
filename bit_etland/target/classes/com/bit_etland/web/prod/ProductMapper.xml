@@ -3,4 +3,35 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bit_etland.web.prod.ProductMapper">
+
+<resultMap id="result" type="hashmap">
+  <id property="productId" column="PRODUCT_ID" />
+  <result property="productName" column="PRODUCT_NAME"/>
+  <result property="supplierId" column="SUPPLIER_ID"/>
+  <result property="categoryId" column="CATEGORY_ID"/>
+  <result property="unit" column="UNIT"/>
+  <result property="price" column="PRICE"/>
+  <result property="photo" column="PHOTO"/>
+  <result property="rownum" column="ROWNUM"/>
+</resultMap>
+	<select id="selectProductList" resultMap="result"
+	    parameterType="com.bit_etland.web.cmm.Proxy">
+				SELECT C3.*
+			FROM (
+					SELECT @rnum:=@rnum+1 AS ROWNUM,C2.PRODUCT_ID,C2.PRODUCT_NAME
+							,C2.SUPPLIER_ID,C2.CATEGORY_ID,C2.UNIT,C2.PRICE
+							,C2.PHOTO
+					FROM(
+							SELECT @ROWNUM:=@ROWNUM+1 as rnum, C.*
+							FROM PRODUCTS C, (SELECT @ROWNUM:=0) R
+							order by rnum DESC) C2,(select @rnum:=0) R
+					)C3
+			WHERE C3.ROWNUM BETWEEN  #{startRow} AND #{endRow}; 
+  </select>
+  <select id="countProduct" resultType="Integer">
+    SELECT count(*) FROM PRODUCTS
+  </select>
+  
+  
+
 </mapper>

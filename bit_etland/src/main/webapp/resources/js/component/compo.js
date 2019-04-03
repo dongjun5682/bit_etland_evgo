@@ -424,201 +424,118 @@ compo = {
             '</footer>' +
             '</div>'
     },
-    cust_list: () => {
-        return '<table class="table table-bordered">' +
-            '<thead>' +
-            '  <tr>' +
-            '    <th>rum</th>' +
-            '    <th>CustomerID</th>' +
-            '    <th>Password</th>' +
-            '    <th>Name</th>' +
-            '    <th>Ssn</th>' +
-            '    <th>Phone</th>' +
-            '    <th>City</th>' +
-            '    <th>Address</th>' +
-            '    <th>PostalCode</th>' +
-            '    <th>Photo</th>' +
-            '  </tr>' +
-            '</thead>' +
-            '<tbody id="cust_list">' +
-            '</tbody>' +
-            '</table>'
-    },
     prod_post : ()=>{
     	return '<div class="col-md-8 order-md-1">'
-    	+'          <h4 class="mb-3">Billing address</h4>'
+    	+'          <h4 class="mb-3">상품 등록</h4>'
     	+'          <form class="needs-validation" novalidate="">'
     	+'            <div class="row">'
     	+'              <div class="col-md-6 mb-3">'
-    	+'                <label for="firstName">First name</label>'
-    	+'                <input type="text" class="form-control" id="firstName" placeholder="" value="" required="">'
+    	+'                <label for="firstName">카테고리</label>'
+    	+'                <input type="text" class="form-control" id="categoryID" placeholder="" value="스마트폰" required="">'
     	+'                <div class="invalid-feedback">'
     	+'                  Valid first name is required.'
     	+'                </div>'
     	+'              </div>'
     	+'              <div class="col-md-6 mb-3">'
-    	+'                <label for="lastName">Last name</label>'
-    	+'                <input type="text" class="form-control" id="lastName" placeholder="" value="" required="">'
+    	+'                <label for="lastName">상품명</label>'
+    	+'                <input type="text" class="form-control" id="productName" placeholder="" value="" required="">'
     	+'                <div class="invalid-feedback">'
     	+'                  Valid last name is required.'
     	+'                </div>'
     	+'              </div>'
     	+'            </div>'
     	+'            <div class="mb-3">'
-    	+'              <label for="username">Username</label>'
-    	+'              <div class="input-group">'
-    	+'                <div class="input-group-prepend">'
-    	+'                  <span class="input-group-text">@</span>'
-    	+'                </div>'
-    	+'                <input type="text" class="form-control" id="username" placeholder="Username" required="">'
-    	+'                <div class="invalid-feedback" style="width: 100%;">'
-    	+'                  Your username is required.'
-    	+'                </div>'
-    	+'              </div>'
-    	+'            </div>'
-    	+'            <div class="mb-3">'
-    	+'              <label for="email">Email <span class="text-muted">(Optional)</span></label>'
-    	+'              <input type="email" class="form-control" id="email" placeholder="you@example.com">'
+    	+'              <label for="price">가격</label>'
+    	+'              <input type="text" class="form-control" id="price" placeholder="가격">'
     	+'              <div class="invalid-feedback">'
-    	+'                Please enter a valid email address for shipping updates.'
+    	+'                ex)1,000,000'
     	+'              </div>'
     	+'            </div>'
     	+'            <div class="mb-3">'
-    	+'              <label for="address">Address</label>'
-    	+'              <input type="text" class="form-control" id="address" placeholder="1234 Main St" required="">'
+    	+'              <label for="price">수량</label>'
+    	+'              <input type="text" class="form-control" id="unit" placeholder="수량">'
     	+'              <div class="invalid-feedback">'
-    	+'                Please enter your shipping address.'
+    	+'                ex)5'
     	+'              </div>'
     	+'            </div>'
-    	+'            <div class="mb-3">'
-    	+'              <label for="address2">Address 2 <span class="text-muted">(Optional)</span></label>'
-    	+'              <input type="text" class="form-control" id="address2" placeholder="Apartment or suite">'
-    	+'            </div>'
+    	+'					<br>'
     	+'            <div class="row">'
     	+'              <div class="col-md-5 mb-3">'
-    	+'                <label for="country">Country</label>'
-    	+'                <select class="custom-select d-block w-100" id="country" required="">'
-    	+'                  <option value="">Choose...</option>'
-    	+'                  <option>United States</option>'
-    	+'                </select>'
-    	+'                <div class="invalid-feedback">'
-    	+'                  Please select a valid country.'
-    	+'                </div>'
-    	+'              </div>'
-    	+'              <div class="col-md-4 mb-3">'
-    	+'                <label for="state">State</label>'
-    	+'                <select class="custom-select d-block w-100" id="state" required="">'
-    	+'                  <option value="">Choose...</option>'
-    	+'                  <option>California</option>'
+    	+'                <label for="country">공급업체</label>'
+    	+'                <select class="custom-select d-block w-100" id="supplierID" required="">'
+    	+'                  <option value="">업체명</option>'
+    	+'                  <option value="samsung">삼성전자</option>'
+    	+'                  <option value="lge">LG전자</option>'
+    	+'                  <option value="apple">애플</option>'
+    	+'                  <option value="xiami">샤오미</option>'
     	+'                </select>'
     	+'                <div class="invalid-feedback">'
     	+'                  Please provide a valid state.'
     	+'                </div>'
-    	+'              </div>'
-    	+'              <div class="col-md-3 mb-3">'
-    	+'                <label for="zip">Zip</label>'
-    	+'                <input type="text" class="form-control" id="zip" placeholder="" required="">'
-    	+'                <div class="invalid-feedback">'
-    	+'                  Zip code required.'
-    	+'                </div>'
-    	+'              </div>'
+    	+'				</div>'
     	+'            </div>'
     	+'            <hr class="mb-4">'
     	+'            <div class="custom-control custom-checkbox">'
+    	+'				<div class="invalid-feedback">'
+    	+'                  사은품 선택(두 개)'
+    	+'                </div>'
     	+'              <input type="checkbox" class="custom-control-input" id="same-address">'
-    	+'              <label class="custom-control-label" for="same-address">Shipping address is the same as my billing address</label>'
+    	+'              <label class="custom-control-label" for="same-address">필름</label>'
     	+'            </div>'
     	+'            <div class="custom-control custom-checkbox">'
     	+'              <input type="checkbox" class="custom-control-input" id="save-info">'
-    	+'              <label class="custom-control-label" for="save-info">Save this information for next time</label>'
+    	+'              <label class="custom-control-label" for="save-info">보조배터리</label>'
+    	+'            </div>'
+      	+'            <div class="custom-control custom-checkbox">'
+    	+'              <input type="checkbox" class="custom-control-input" id="save-info">'
+    	+'              <label class="custom-control-label" for="save-info">케이스</label>'
     	+'            </div>'
     	+'            <hr class="mb-4">'
-    	+'            <h4 class="mb-3">Payment</h4>'
+    	+'            <h4 class="mb-3">색상을 선택해주세요</h4>'
     	+'            <div class="d-block my-3">'
     	+'              <div class="custom-control custom-radio">'
     	+'                <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked="" required="">'
-    	+'                <label class="custom-control-label" for="credit">Credit card</label>'
+    	+'                <label class="custom-control-label" for="credit">Black</label>'
     	+'              </div>'
     	+'              <div class="custom-control custom-radio">'
     	+'                <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required="">'
-    	+'                <label class="custom-control-label" for="debit">Debit card</label>'
+    	+'                <label class="custom-control-label" for="debit">Red</label>'
     	+'              </div>'
     	+'              <div class="custom-control custom-radio">'
     	+'                <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required="">'
-    	+'                <label class="custom-control-label" for="paypal">PayPal</label>'
+    	+'                <label class="custom-control-label" for="paypal">Blue</label>'
     	+'              </div>'
     	+'            </div>'
+      	+'            <hr class="mb-4">'
     	+'            <div class="row">'
     	+'              <div class="col-md-6 mb-3">'
-    	+'                <label for="cc-name">Name on card</label>'
-    	+'                <input type="text" class="form-control" id="cc-name" placeholder="" required="">'
-    	+'                <small class="text-muted">Full name as displayed on card</small>'
+    	+'                <label for="cc-name">제품설명</label>'
+    	+'                <input type="textarea" class="form-control" id="cc-name" placeholder="" required="">'
     	+'                <div class="invalid-feedback">'
     	+'                  Name on card is required'
     	+'                </div>'
     	+'              </div>'
-    	+'              <div class="col-md-6 mb-3">'
-    	+'                <label for="cc-number">Credit card number</label>'
-    	+'                <input type="text" class="form-control" id="cc-number" placeholder="" required="">'
-    	+'                <div class="invalid-feedback">'
-    	+'                  Credit card number is required'
-    	+'                </div>'
-    	+'              </div>'
-    	+'            </div>'
-    	+'            <div class="row">'
+    	+'</div>'
+    	+'            <hr class="mb-4">'
+     	+'            <div class="row">'
     	+'              <div class="col-md-3 mb-3">'
-    	+'                <label for="cc-expiration">Expiration</label>'
+    	+'                <label for="cc-expiration">이미지 등록(파일 업로드)</label>'
     	+'                <input type="text" class="form-control" id="cc-expiration" placeholder="" required="">'
     	+'                <div class="invalid-feedback">'
     	+'                  Expiration date required'
     	+'                </div>'
     	+'              </div>'
     	+'              <div class="col-md-3 mb-3">'
-    	+'                <label for="cc-cvv">CVV</label>'
+    	+'                <label for="cc-cvv">이미지 등록(드래그&드랍)</label>'
     	+'                <input type="text" class="form-control" id="cc-cvv" placeholder="" required="">'
     	+'                <div class="invalid-feedback">'
     	+'                  Security code required'
     	+'                </div>'
     	+'              </div>'
-    	+'            </div>'
+    	+'</div>'
     	+'            <hr class="mb-4">'
     	+'            <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>'
     	+'          </form>'
     	+'        </div>'
-    },
-    /*prod_post: () => {
-    return '<div class="container">' +
-        '<h1>제품등록 페이지</h1>' +
-        '<hr>' +
-        '<div class="form-group">' +
-        '  <label for="productName">상품명:</label>' +
-        '  <input type="text" class="form-control" id="productName" name="productName">' +
-        '</div>' +
-        '<div class="form-group">' +
-        '  <label for="price">가격:</label>' +
-        '  <input type="text" class="form-control" id="price" name="price">' +
-        '</div>' +
-        '<h3> 색상 </h3>' +
-        '<label class="checkbox-inline"><input type="checkbox" value="">Red</label>' +
-        '<label class="checkbox-inline"><input type="checkbox" value="">Blue</label>' +
-        '<label class="checkbox-inline"><input type="checkbox" value="">Black</label>' +
-        '<h3>제조사</h3>' +
-        '<label class="radio-inline"><input type="radio" name="supplierId" checked>Samsung</label>' +
-        '<label class="radio-inline"><input type="radio" name="supplierId">apple</label>' +
-        '<label class="radio-inline"><input type="radio" name="supplierId">LG</label>' +
-        '<div class="form-group">' +
-        '  <label for="sel1">카테고리 :</label>' +
-        '  <select class="form-control" id="sel1">' +
-        '    <option>데스크탑</option>' +
-        '    <option>노트북</option>' +
-        '    <option>핸드폰</option>' +
-        '  </select>' +
-        '</div>' +
-        '<p>생산년월일: <input type="text" id="datepicker"></p>' +
-        '<div class="form-group">' +
-        '  <label for="comment">상세설명:</label>' +
-        '  <textarea class="form-control" rows="5" id="comment"></textarea>' +
-        '</div>' +
-        '</div>'
-},*/
+    }
 }

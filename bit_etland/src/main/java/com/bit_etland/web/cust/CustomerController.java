@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bit_etland.web.cmm.IConsumer;
 import com.bit_etland.web.cmm.IFunction;
+import com.bit_etland.web.cmm.ISuppiler;
 import com.bit_etland.web.cmm.PrintService;
 import com.bit_etland.web.cmm.Proxy;
 import com.bit_etland.web.cmm.Users;
@@ -51,11 +52,12 @@ public class CustomerController {
 	public Map<?,?> list(
 			@PathVariable String page){
 		logger.info("\n ===============Cust List=================");
+		ISuppiler s = ()->custMap.countCustomers();
 		map.clear();
-		map.put("page_num",page);
+		map.put("pageNum",page);
 		map.put("page_size","5");
-		map.put("block_Size","5");
-		map.put("total_count","36");
+		map.put("blockSize","5");
+		map.put("totalCount",(int)s.get());
 		pxy.carryOut(map);
 		IFunction i = (Object o)->custMap.selectCustomerList(pxy);
 		List<?> ls = (List<?>)i.apply(pxy);
