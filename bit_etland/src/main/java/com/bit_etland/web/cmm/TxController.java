@@ -27,15 +27,15 @@ public class TxController {
 			@PathVariable String srch,
 			@PathVariable String page) {
 		logger.info("\n ===============Tx Srch=================");
-		String sa = "%"+srch+"%";
-		ISuppiler s = () -> prodMap.srchCountProduct(sa);
+		String sr = "%"+srch+"%";
+		ISuppiler s = () -> prodMap.srchCountProduct(sr);
 		map.clear();
 		map.put("pageNum", page);
 		map.put("page_size", "5");
 		map.put("blockSize", "5");
 		map.put("totalCount", (int)s.get());
-		map.put("srch",sa);
-		System.out.println("srch "+ sa);
+		map.put("srch",sr);
+		System.out.println("srch "+ sr);
 		System.out.println("total cont "+ (int) s.get() );
 		System.out.println("total cont "+page);
 		pxy.carryOut(map);

@@ -39,7 +39,7 @@
 							FROM PRODUCTS C, (SELECT @ROWNUM:=0) R
 							order by rnum DESC) C2,(select @rnum:=0) R
 					)C3
-			WHERE C3.ROWNUM BETWEEN  #{startRow} AND #{endRow}; 
+			WHERE C3.ROWNUM BETWEEN #{startRow} AND #{endRow}; 
   </select>
   <select id="countProduct" resultType="Integer">
     SELECT count(*) FROM PRODUCTS
