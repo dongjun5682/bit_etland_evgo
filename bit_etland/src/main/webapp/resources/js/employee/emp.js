@@ -23,7 +23,8 @@ emp = (() => {
             $.getScript($.js() + '/component/compo.js'),
             $.getScript($.js() + '/product/prod.js'),
             $.getScript($.js() + '/employee/emp.js'),
-            $.getScript($.js() + '/customer/cust.js')
+            $.getScript($.js() + '/customer/cust.js'),
+            $.getScript($.js() + '/common/util.js')
         ).done(() => {
             $('#right_content').empty();
             $('<h1>PRODUCT REGISTER PAGE</h1>').appendTo('#right_content');
@@ -50,11 +51,7 @@ emp = (() => {
                                 break;
                             case 'prod_post':
                                 $(l_cnt + ' h4').text(j.txt);
-                                $(r_cnt).empty();
-                                $(compo.prod_post()).appendTo(r_cnt);
-                                $('.col-md-8 button[type=submit]').click(() => {
-                                    prod.post();
-                                })
+                                    prod.post();                         
                                 break;
                             case 'prod_up':
                                 $(l_cnt + ' h4').text(j.txt);
@@ -96,6 +93,10 @@ emp = (() => {
             name: 'prod_stati'
         }];
     }
+    let srch =()=>{
+    	
+    }
+    
     return {
         init: init
     }

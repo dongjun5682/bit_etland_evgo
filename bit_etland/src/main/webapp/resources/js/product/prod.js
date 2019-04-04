@@ -20,7 +20,8 @@ prod = (() => {
     let setContentView = () => {
         $.when(
                 $.getScript(compojs),
-                $.getScript($.js() + '/customer/cust.js'))
+                $.getScript($.js() + '/customer/cust.js'),
+                $.getScript($.js() + '/common/util.js'))
             .done(() => {
                 $(r_cnt).empty();
                 $(compo.cust_shopping_form()).appendTo(r_cnt);
@@ -77,6 +78,8 @@ prod = (() => {
                 '<th>카테고리번호</th>' +
                 '<th>수량</th>' +
                 '<th>가격</th>' +
+                '<th>컬러</th>' +
+                '<th>제품설명</th>' +
                 '<th>사진</th>' +
                 '</tr>'
             $.each(d.ls, (i, j) => {
@@ -87,6 +90,8 @@ prod = (() => {
                     '<td>' + j.categoryId + '</td>' +
                     '<td>' + j.unit + '</td>' +
                     '<td>' + j.price + '</td>' +
+                    '<td>' + j.color + '</td>' +
+                    '<td>' + j.comment + '</td>' +
                     '<td>' + j.photo + '</td>' +
                     '</tr>'
             });
@@ -128,27 +133,47 @@ prod = (() => {
     }
     let post = () => {
         reset();
-        let data = {
-            productName: $('#productName').val(),
-            price: $('#price').val(),
-            unit: $('#unit').val(),
-            supplierID: $('#supplierID').val(),
-            categoryID: $('#categoryID').val()
-        };
-        $.ajax({
-            url: _ + '/products',
-            type: 'POST',
-            data: JSON.stringify(data),
-            dataType: 'json',
-            contentType: 'application/json',
-            success: d => {
-                alert('성공');
+        $(r_cnt).empty();
+        $(compo.prod_post()).appendTo(r_cnt);
+        $('.col-md-8 button[type=submit]').click(e=>{
+        	e.preventDefault();
+        	 let checkboxValues  = [];
+			 $(".checks:checked").each(function(i) {
+				 checkboxValues.push($(this).val());
+			});
+			 let pname = $('#productName').val();
+			 let price = $('#price').val();
+			 let unit = $('#unit').val();
+			 if($.fn.nullChecker([pname,price,unit])){
+				 alert('access X ');
+			 }else{
+				 alert('access O ');
+			 }
 
-            },
-            error: e => {
-                alert('실패');
-            }
-        });
+            let data = {
+                productName:pname,
+                price: price,
+                unit: unit,
+                supplierID: $('#supplierID').val(),
+                categoryID: $('#categoryID').val(),
+                color : $('.radi:checked').val(),
+                comment : $('#comment').val(),
+                freebies:checkboxValues};
+            $.ajax({
+                url: _ +'/phones',
+                type: 'POST',
+                data: JSON.stringify(data),
+                dataType: 'json',
+                contentType: 'application/json',
+                success: d => {
+                    alert('성공');
+                    
+                },
+                error: e => {
+                    alert('실패');
+                }
+            });
+        })
     }
     let get = () => {
 

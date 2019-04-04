@@ -19,10 +19,11 @@ cust = (() => {
     }
     let setContentView = (d) => {
         $.when($.getScript(compojs),
-                $.getScript($.js() + '/employee/emp.js'))
+                $.getScript($.js() + '/employee/emp.js'),
+                $.getScript(js + '/product/prod.js'))
             .done(() => {
                 $(r_cnt).empty();
-                $(compo.cust_profil_form(d)).appendTo(r_cnt);
+                $(compo.cust_shopping_form()).appendTo(r_cnt);
                 $(l_cnt + ' ul.nav').empty();
                 let arr = [{
                     txt: '쇼핑몰',
@@ -53,13 +54,16 @@ cust = (() => {
                             $(this).siblings().removeClass('active');
                             switch (that) {
                                 case 'main':
-                                    $.getScript(js + '/product/prod.js').done(() => {
-                                        prod.init();
-                                    })
+                                        prod.init();                               
                                     break;
                                 case 'mypage':
                                     $(r_cnt).empty();
                                     $(compo.cust_profil_form(d)).appendTo(r_cnt);
+                                    $('#srch_btn').on('click',()=>{
+                                     	let x = {srch :$('.form-control').val(),
+                                     			  page : 1}
+                                     	srch(x);
+                                    })
                                     break;
                                 case 'update':
                                     $(r_cnt).empty();
@@ -87,12 +91,14 @@ cust = (() => {
                             }
 
                         })
-                    $('[name=mypage]').addClass('active');
+                    $('[name=main]').addClass('active');
                 });
             })
             .fail(() => {
                 alert('component/compo.js 를 찾지  못했습니다.');
             });
+       
+        
     }
 
     let update = (d) => {
@@ -157,7 +163,7 @@ cust = (() => {
             let table = '<table class="table table-bordered"><tr>' +
                 '<th>RowNum</th>' +
                 '<th>CustomerID</th>' +
-                '<th>Name</th>' +
+                '<th>CustName</th>' +
                 '<th>Gender</th>' +
                 '<th>Phone</th>' +
                 '<th>City</th>' +
@@ -213,8 +219,99 @@ cust = (() => {
         });
 
     }
+    let srch=(x)=>{
+    		reset();
+         	if($.fn.nullChecker([x.srch])){
+         		 alert('검색값을 입력해주세요');
+         	}else{
+         		 alert('검색어 : '+x.srch);
+         		$.getJSON(_+'/srch/'+x.srch+'/'+x.page,d=>{
+             		alert('성공');
+             		 $(r_cnt).empty();
+             	   $('<div class="grid-item" id="content_1">' +
+                           '<h1><font style="font-size: 20px;margin: 0 auto;">상품 목록</font>' +
+                           '</h1>' +
+                           '</div>' +
+                           '<div class="grid-item" id="content_2"></div>')
+                       .appendTo(r_cnt);
+                   let table = '<table class="table table-bordered"><tr>' +
+                       '<th>ROWNUM</th>' +
+                       '<th>Prouct_No</th>' +
+                       '<th>CategoryName</th>' +
+                       '<th>Supplier_No</th>' +
+                       '<th>ProductName</th>' +
+                       '<th>Country</th>' +
+                       '<th>Color</th>' +
+                       '<th>Comment</th>' +
+                       '<th>Unit</th>' +
+                       '<th>Price</th>' +
+                       '<th>Photo</th>' +
+                       '</tr>'
+                   $.each(d.srch, (i, j) => {
+                       table += '<tr><td>' + j.rownum + '</td>' +
+                           '<td>' + j.productId + '</td>' +
+                           '<td>' + j.categoryId + '</td>' +
+                           '<td>' + j.supplierId + '</td>' +
+                           '<td>' + j.productName + '</td>' +
+                           '<td>' + j.country + '</td>' +
+                           '<td>' + j.color + '</td>' +
+                           '<td>' + j.comment + '</td>' +
+                           '<td>' + j.unit + '</td>' +
+                           '<td>' + j.price + '</td>' +
+                           '<td>' + j.photo + '</td>' +
+                           '</tr>'
+                   });
+                   table += '</table>'
+                   //$(r_cnt).empty();
+                   $(table)
+                       .attr('id', 'cust_tab')
+                       .appendTo('#content_2');
+
+                   let html = '<nav style="margin-left: 510px;"> <ul class="pagination">'
+                   if (d.pxy.existPrev) {
+                       html += '<li class="prevBlock"><a href="#">&laquo;</a></li>';
+                   }
+                   let i = 0;
+                   for (i = d.pxy.startPage; i <= d.pxy.endPage; i++) {
+                       if (x == i) {
+                           html += '<li class="active"><a href="#" class="page">' + i + '</a></li>';
+                       } else {
+
+                           html += '<li><a href="#" class="page">' + i + '</a></li>';
+                       }
+                   }
+                   if (d.pxy.existNext) {
+                       html += '<li class="nextBlock"><a href="#">&raquo;</a></li>';
+                   }
+                   $('.table').after(html);
+                   $('.page').each(function() {
+                       $(this).click(() => {
+                    	   let arr = {srch :x.srch,
+                    			   	  page :$(this).text()};
+                    	   srch(arr);
+                       });
+                   });
+                   $('.nextBlock').click(function() {
+                	   let arr = {srch :x.srch,
+             			   	  page :d.pxy.nextBlock};
+                	   srch(arr);
+                   })
+                   $('.prevBlock').click(function() {
+                	   let arr = {srch :x.srch,
+             			   	  page :d.pxy.prevBlock};
+                	   srch(arr);
+                   })
+             		
+             		
+             		
+             		
+             	})
+         	}
+
+    }
     return {
         init: init,
-        list: list
+        list: list,
+        srch:srch
     }
 })();

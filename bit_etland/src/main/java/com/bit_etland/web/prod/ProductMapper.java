@@ -13,6 +13,10 @@ public interface ProductMapper {
 	public List<?> selectProductList(Proxy pxy);
 	public List<Product> selectProducts(Map<?,?> m);
 	public Product selectProduct(Product pro);
+	
+	public int srchCountProduct(String srch);
+	
+	public List<?> selectSrch(Proxy pxy);
 	public int countProduct();
 	public boolean existProduct(Product pro);
 	

@@ -14,7 +14,8 @@ public class Proxy {
 	startPage,endPage,blockNum,
 	prevBlock,nextBlock,totalCount;
 private boolean existPrev, existNext;
-
+	private String srch;
+	
     public void carryOut(Map<?,?> paramMap) {
 
 		System.out.println("page_size : "+ paramMap.get("page_size"));
@@ -35,7 +36,7 @@ private boolean existPrev, existNext;
 		
 		System.out.println("startPage : :  : :  "+startPage);
 		System.out.println("pageSize : :  : :  "+pageSize);
-		System.out.println("pageSize : :  : :  "+pageCount);
+		System.out.println("pagecount : :  : :  "+pageCount);
 		
 		existNext = (startPage + pageSize) <= pageCount;
 		existPrev = (startPage - pageSize) > 0 ;
@@ -43,5 +44,6 @@ private boolean existPrev, existNext;
 		
 		prevBlock = startPage - pageSize;
 		nextBlock = startPage + pageSize;
+		srch = (String) paramMap.get("srch");
     }
 }

@@ -13,14 +13,27 @@
   <result property="price" column="PRICE"/>
   <result property="photo" column="PHOTO"/>
   <result property="rownum" column="ROWNUM"/>
+  <result property="comment" column="COMMENT"/>
+  <result property="color" column="COLOR"/> 
+   <result property="country" column="COUNTRY"/> 
+  
 </resultMap>
+<insert id="insertProduct" 
+	  parameterType="com.bit_etland.web.cate.Category"
+	  flushCache="true"
+	  statementType="PREPARED"
+	  timeout="20">
+	INSERT INTO PRODUCTS(PRODUCT_NAME,SUPPLIER_ID,CATEGORY_ID,UNIT,PRICE,COLOR,COMMENT)
+ 	VALUES(#{productName},#{supplierID},#{categoryID},#{unit},#{price},#{color},#{comment});
+</insert>
+
 	<select id="selectProductList" resultMap="result"
 	    parameterType="com.bit_etland.web.cmm.Proxy">
 				SELECT C3.*
 			FROM (
 					SELECT @rnum:=@rnum+1 AS ROWNUM,C2.PRODUCT_ID,C2.PRODUCT_NAME
 							,C2.SUPPLIER_ID,C2.CATEGORY_ID,C2.UNIT,C2.PRICE
-							,C2.PHOTO
+							,C2.PHOTO,C2.COLOR,C2.COMMENT
 					FROM(
 							SELECT @ROWNUM:=@ROWNUM+1 as rnum, C.*
 							FROM PRODUCTS C, (SELECT @ROWNUM:=0) R
@@ -31,6 +44,30 @@
   <select id="countProduct" resultType="Integer">
     SELECT count(*) FROM PRODUCTS
   </select>
+  
+   <select id="selectSrch" resultMap="result"
+  	 parameterType="com.bit_etland.web.cmm.Proxy">
+		SELECT A.*
+		FROM (SELECT @ROWNUM:=@ROWNUM+1 AS ROWNUM,P.PRODUCT_ID,C.CATEGORY_NAME AS CATEGORY_ID
+		 ,S.SUPPLIER_NAME AS SUPPLIER_ID,P.PRODUCT_NAME,S.COUNTRY,P.COLOR,P.COMMENT,P.UNIT,P.PRICE,P.PHOTO
+		FROM PRODUCTS P JOIN SUPPLIERS S
+			ON P.SUPPLIER_ID = S.SUPPLIER_ID
+			JOIN CATEGORIES C ON	P.CATEGORY_ID=C.CATEGORY_ID,(SELECT @ROWNUM:=0) AS R
+		WHERE P.PRODUCT_NAME LIKE #{srch} OR S.SUPPLIER_NAME LIKE #{srch} OR C.CATEGORY_NAME LIKE #{srch})A
+		WHERE A.ROWNUM BETWEEN #{startRow} AND #{endRow};
+  </select>
+  
+  <select id="srchCountProduct" resultType="Integer" parameterType="string">
+		  SELECT count(*)
+		FROM (SELECT @ROWNUM:=@ROWNUM+1 AS ROWNUM,P.PRODUCT_ID,C.CATEGORY_NAME AS CATEGORY_ID 
+		,S.SUPPLIER_NAME AS SUPPLIER_ID,P.PRODUCT_NAME,S.COUNTRY,P.COLOR,P.COMMENT,P.UNIT,P.PRICE,P.PHOTO
+		FROM PRODUCTS P JOIN SUPPLIERS S
+			ON P.SUPPLIER_ID = S.SUPPLIER_ID
+			JOIN CATEGORIES C ON	P.CATEGORY_ID=C.CATEGORY_ID,(SELECT @ROWNUM:=0) AS R
+		WHERE P.PRODUCT_NAME LIKE #{srch} OR S.SUPPLIER_NAME LIKE #{srch} OR C.CATEGORY_NAME LIKE #{srch})A
+  
+  </select>
+  
   
   
 
