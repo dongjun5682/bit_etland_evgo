@@ -133,11 +133,7 @@ prod = (() => {
     }
     let post = () => {
         reset();
-        $(r_cnt).empty();
-        $(compo.prod_post()).appendTo(r_cnt);
-        $('.col-md-8 button[type=submit]').click(e=>{
-        	e.preventDefault();
-        	 let checkboxValues  = [];
+     	 let checkboxValues  = [];
 			 $(".checks:checked").each(function(i) {
 				 checkboxValues.push($(this).val());
 			});
@@ -173,7 +169,7 @@ prod = (() => {
                     alert('실패');
                 }
             });
-        })
+ 
     }
     let get = () => {
 
@@ -194,9 +190,10 @@ prod = (() => {
          		alert('성공');
          		 $(r_cnt).empty();
          	   $('<div class="grid-item" id="content_1">' +
-                       '<h1><font style="font-size: 20px;margin: 0 auto;">상품 목록</font>' +
-                       '</h1>' +
-                       '</div>' +
+                       '<h1><font style="font-size: 20px;margin: 0 auto;">검색 목록</font>' +
+                       '</h1>' +                   
+                       '<button id="grid_btn" type="button" class="btn btn-primary" style="width:150px;">그리드로 보기</button>'+
+                       '</div> <br>' +
                        '<div class="grid-item" id="content_2"></div>')
                    .appendTo(r_cnt);
                let table = '<table class="table table-bordered"><tr>' +
@@ -265,12 +262,94 @@ prod = (() => {
             	   let arr = {srch :x.srch,
          			   	  page :d.pxy.prevBlock};
             	   srch(arr);
-               }) 		
+               }) 
+               $('#grid_btn').click(e=>{
+            	   alert('그리드 버튼 클릭');
+            	   let arr = {srch :x.srch,
+          			   	  page :'1'};
+            		   srch_grid(arr);          	  
+               })   	   
          	})
      	}
 
 }
-    
+   let srch_grid=(x)=>{
+	   	reset();
+	   	$(r_cnt).empty();
+	   	
+	    let url=_+'/srch/'+x.srch+'/grid/'+x.page;
+ 	   $.getJSON(url,d=>{
+	   	let html = '<div> <button id="grid_to_list"type="button" class="btn btn-primary active" style="width:150px;">리스트 보기</button></div><br>'
+	   		+'<div id="srch_grid" class="col-md-12 col-lg-12">';
+	   	let i =0;
+	   		$.each(d.grid,(x,y)=>{
+		   		html += '<div class="pagesCont">'
+		   			+  			' <div class="col-md-4 col-lg-4">'
+		   			+'            <div class="col-md-12 col-lg-12 well">'
+		   			+'                <h4 class="break-word">'
+		   			+'                    <a href="#">Item 1</a>'
+		   			+'                </h4>'
+		   			+'                <a href="#">'
+		   			+'                    <img src="http://img.danawa.com/cp_images/service/149/3345923/148858558004411746101.jpg" alt="NO VA" class="img-responsive img-thumbnail">'
+		   			+'                </a>'
+		   			+'                <h5 class="col-md-8 col-lg-8 break-word">'
+		   			+'                    <a href="#">Category</a>'
+		   			+'                </h5>'
+		   			+'                <h4 class="col-md-4 col-lg-4 text-right"> 1 €</h4>'
+		   			+'                <div>'
+		   			+'                    <div class="col-md-12 col-lg-12">'
+		   			+'                        <a href="#" class="break-word">UserName UserLastName</a>'
+		   			+'                    </div>'
+		   			+'                </div>'
+		   			+'            </div>'
+		   			+'        </div>'
+		   	})
+	   		html += '</div>'+'</div>';
+	   	$(html).appendTo(r_cnt);
+	   	
+	    let pana = '<nav style="margin-left: 510px;"> <ul class="pagination">'
+            if (d.pxy.existPrev) {
+            	pana += '<li class="prevBlock"><a href="#">&laquo;</a></li>';
+            }
+            let j = 0;
+            for (j = d.pxy.startPage; j <= d.pxy.endPage; j++) {
+                if (d == j) {
+                	pana += '<li class="active"><a href="#" class="page">' + j + '</a></li>';
+                } else {
+
+                	pana += '<li><a href="#" class="page">' + j + '</a></li>';
+                }
+            }
+            if (d.pxy.existNext) {
+            	pana += '<li class="nextBlock"><a href="#">&raquo;</a></li>';
+            }
+            $('#srch_grid').after(pana);
+            $('.page').each(function() {            
+                $(this).click(() => {
+             	   let arr = {srch :x.srch,
+             			   	  page :$(this).text()};
+             	  srch_grid(arr);
+                });
+            });
+            $('.nextBlock').click(function() {
+         	   let arr = {srch :x.srch,
+      			   	  page :d.pxy.nextBlock};
+         	  srch_grid(arr);
+            })
+            $('.prevBlock').click(function() {
+         	   let arr = {srch :x.srch,
+      			   	  page :d.pxy.prevBlock};
+         	  srch_grid(arr);
+            }) 
+            
+            $('#grid_to_list').click(e=>{
+         	   alert('리스트 버튼 클릭');
+         	   let arr = {srch :x.srch,
+       			   	  page :'1'};
+         		   srch(arr);          	  
+            })   	
+ 	   });
+   }
     
     return {
         init: init,
@@ -279,6 +358,7 @@ prod = (() => {
         put: put,
         del: del,
         list: list,
-        srch:srch
+        srch:srch,
+        srch_grid:srch_grid
     }
 })();

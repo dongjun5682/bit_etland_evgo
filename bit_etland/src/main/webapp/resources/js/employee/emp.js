@@ -51,7 +51,31 @@ emp = (() => {
                                 break;
                             case 'prod_post':
                                 $(l_cnt + ' h4').text(j.txt);
-                                    prod.post();                         
+                                $(r_cnt).empty();
+                                $(compo.prod_post()).appendTo(r_cnt);
+                                $('.col-md-8 button[type=submit]').click(e=>{
+                                    prod.post();   
+                                });
+                                $('#img_upload_btn').click(function(){
+                                	let ok = (this.files[0].name.match(/jpg|gif|png|jpeg/i)) ? true : false;
+                                	if(ok){
+                                		$('#img_upload_frm').attr('action',_+'/phones/files');
+                                		$.ajx({
+                                			url :$('#img_upload_frm').attr('action'),
+                                			dataType:'text',
+                                			enctype : 'multipart/form-adta',
+                                			beforeSubmit : function(){
+                                				alert('로딩');
+                                			},                         
+                                			success : d=>{
+                                				alert('파일 업로드 성공 ');
+                                			}
+                                		}).submit();
+                                	}else{
+                                		alert('gif,png,jpg,jpeg 파일만 업로드 할 수 있습니다.')
+                                	}
+                                })
+                                                    
                                 break;
                             case 'prod_up':
                                 $(l_cnt + ' h4').text(j.txt);

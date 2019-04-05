@@ -9,11 +9,9 @@
   <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
- <link id="boot3" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <link rel="canonical" href="https://getbootstrap.com/docs/4.1/examples/checkout/">
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
@@ -70,8 +68,8 @@
         <li><a href="#section3">Family</a></li>
         <li><a href="#section3">Photos</a></li>
       </ul><br>
-      <div class="input-group">
-        <input type="text" class="form-control" placeholder="상품검색">
+      <div id="srch_grp" class="input-group">
+        <input id="srchWord" type="text" class="form-control" placeholder="마이페이지에서만 상품검색 가능" value="갤럭시">
         <span class="input-group-btn">
           <button id="srch_btn" class="btn btn-default" type="button">
             <span class="glyphicon glyphicon-search"></span>
@@ -150,12 +148,13 @@
 <footer class="container-fluid">
   <p>Footer Text</p>
 </footer>
- <script src="<%=application.getContextPath()%>/resources/js/app.js"></script>
-  <script src="<%=application.getContextPath()%>/resources/js/customer/cust.js"></script>
+   <script src="<%=application.getContextPath()%>/resources/js/app.js"></script>
+   <script src="<%=application.getContextPath()%>/resources/js/customer/cust.js"></script>
    <script src="<%=application.getContextPath()%>/resources/js/common/auth.js"></script>
    <script src="<%=application.getContextPath()%>/resources/js/product/prod.js"></script>
-      <script src="<%=application.getContextPath()%>/resources/js/employee/emp.js"></script>
-       <script src="<%=application.getContextPath()%>/resources/js/common/util.js"></script>
+   <script src="<%=application.getContextPath()%>/resources/js/employee/emp.js"></script>
+   <script src="<%=application.getContextPath()%>/resources/js/common/util.js"></script>
+   <script src="<%=application.getContextPath()%>/resources/js/product/fileupload.js"></script>
 <script>
 app.init('<%=application.getContextPath()%>');
 </script>

@@ -60,8 +60,8 @@ cust = (() => {
                                     $(r_cnt).empty();
                                     $(compo.cust_profil_form(d)).appendTo(r_cnt);
                                     $('#srch_btn').on('click',()=>{
-                                     	let x = {srch :$('.form-control').val(),
-                                     			  page : 1}
+                                     	let x = {srch :$('#srchWord').val(),
+                                     			  page : '1'}
                                      	prod.srch(x);
                                     })
                                     break;
@@ -92,6 +92,7 @@ cust = (() => {
 
                         })
                     $('[name=main]').addClass('active');
+                    $('#srch_grp').show();
                 });
             })
             .fail(() => {

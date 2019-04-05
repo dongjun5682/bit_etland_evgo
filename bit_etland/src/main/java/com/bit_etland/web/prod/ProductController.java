@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.bit_etland.web.cate.Category;
 import com.bit_etland.web.cate.CategoryMapper;
@@ -117,6 +119,12 @@ public class ProductController {
 		c.accept(param);
 		map.clear();
 		map.put("s", "success");
+		return map;
+	}
+	
+	@RequestMapping(value="/phones/file")
+	public Map<?,?> fileUpload(MultipartFile file)throws Exception{
+		ps.accept("넘어온 파일명 : "+file.getName());
 		return map;
 	}
 }

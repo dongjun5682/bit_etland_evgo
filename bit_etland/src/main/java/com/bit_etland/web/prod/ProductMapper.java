@@ -14,7 +14,7 @@ public interface ProductMapper {
 	public List<Product> selectProducts(Map<?,?> m);
 	public Product selectProduct(Product pro);
 	
-	public int srchCountProduct(String srch);
+	public int countSrchProduct(String srch);
 	
 	public List<?> selectSrch(Proxy pxy);
 	public int countProduct();

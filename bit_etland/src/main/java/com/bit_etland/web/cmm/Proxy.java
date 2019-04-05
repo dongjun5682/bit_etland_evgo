@@ -1,10 +1,17 @@
 package com.bit_etland.web.cmm;
 
+import java.io.File;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import lombok.Data;
 @Component @Data @Lazy
 public class Proxy {
@@ -13,9 +20,10 @@ public class Proxy {
 	startRow,endRow,
 	startPage,endPage,blockNum,
 	prevBlock,nextBlock,totalCount;
-private boolean existPrev, existNext;
+	private boolean existPrev, existNext;
 	private String srch;
 	
+	@Autowired Image img;
     public void carryOut(Map<?,?> paramMap) {
 
 		System.out.println("page_size : "+ paramMap.get("page_size"));
@@ -45,5 +53,35 @@ private boolean existPrev, existNext;
 		prevBlock = startPage - pageSize;
 		nextBlock = startPage + pageSize;
 		srch = (String) paramMap.get("srch");
+
     }
+    
+    public void fileUpload(String customerID) {
+		FileItemFactory factory = new DiskFileItemFactory();
+		ServletFileUpload upload = new ServletFileUpload(factory);
+		upload.setFileSizeMax(1024 * 1024 * 40); // 40 MB
+		upload.setSizeMax(1024 * 1024 * 50); // 50 MB
+		List<FileItem> items = null;
+		try {
+			File file = null;
+			// items = upload.parseRequest((RequestContext) new ServletRequestContext(request));
+			Iterator<FileItem> it = items.iterator();
+			while(it.hasNext()) {
+				FileItem item = it.next();
+				if(!item.isFormField()) {
+					String fileName = item.getName();
+					file = new File(""+fileName);
+					item.write(file);
+					img.setImgName(fileName.substring(0,fileName.indexOf(".")));
+					img.setImgExtention(fileName.substring(fileName.indexOf(".")+1));
+					img.setOwner(customerID);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+    }
+    
 }
+

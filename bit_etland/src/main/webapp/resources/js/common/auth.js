@@ -173,6 +173,7 @@ auth = (() => {
                             }
                         });
                     $('[name=main]').addClass('active');
+                    $('#srch_grp').hide();
                 });
             })
             .fail(() => {

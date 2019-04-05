@@ -22,29 +22,52 @@ public class TxController {
 	@Autowired ProductMapper prodMap;
 	@Autowired Map<String,Object> map;
 	@Autowired Proxy pxy;
+	
 	@GetMapping("/srch/{srch}/{page}")
 	public Map<?,?> srch(
 			@PathVariable String srch,
 			@PathVariable String page) {
 		logger.info("\n ===============Tx Srch=================");
-		String sr = "%"+srch+"%";
-		ISuppiler s = () -> prodMap.srchCountProduct(sr);
+		System.out.println("srch"+srch);
+		ISuppiler s = () -> prodMap.countSrchProduct(srch);
 		map.clear();
 		map.put("pageNum", page);
-		map.put("page_size", "5");
-		map.put("blockSize", "5");
 		map.put("totalCount", (int)s.get());
-		map.put("srch",sr);
-		System.out.println("srch "+ sr);
+		map.put("srch",srch);
 		System.out.println("total cont "+ (int) s.get() );
 		System.out.println("total cont "+page);
+		System.out.println("srch"+srch);
+		
 		pxy.carryOut(map);
 		IFunction f = (Object o) -> prodMap.selectSrch(pxy);
 		List<?> ls = (List<?>) f.apply(pxy);
 		map.put("srch",ls);
 		map.put("pxy",pxy);	
 		System.out.println(ls.toString());
-		map.put("prod",ls);
 		return map;
 	}
+	
+	@GetMapping("/srch/{srch}/grid/{page}")
+	public Map<?,?> srchGrid(
+			@PathVariable String srch,
+			@PathVariable String page) {
+		logger.info("\n ===============Tx Srch=================");
+		System.out.println("srch"+srch);
+		System.out.println("srch"+page);
+		
+		ISuppiler s = () -> prodMap.countSrchProduct(srch);
+		map.clear();
+		map.put("pageNum", page);
+		map.put("totalCount", (int)s.get());
+		map.put("page_size", "9");
+		map.put("srch",srch);
+		pxy.carryOut(map);
+		IFunction f = (Object o) -> prodMap.selectSrch(pxy);
+		List<?> ls = (List<?>) f.apply(pxy);
+		map.put("grid",ls);
+		map.put("pxy",pxy);	
+		System.out.println(ls.toString());
+		return map;
+	}
+	
 }
